@@ -1,4 +1,4 @@
-package ru.praktikum.services.qa.scooter;
+package ru.praktikum.services.qa.scooter.pageObject;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;

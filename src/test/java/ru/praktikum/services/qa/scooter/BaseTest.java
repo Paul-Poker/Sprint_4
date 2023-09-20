@@ -1,9 +1,10 @@
-package ru.practikum.services.qa.scooter;
+package ru.praktikum.services.qa.scooter;
 
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
-import ru.praktikum.services.qa.scooter.WebDriverFactory;
+import ru.praktikum.services.qa.scooter.pageObject.WebDriverFactory;
+
 
 import java.util.concurrent.TimeUnit;
 
