@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 
-public class QuestionsTest {
+public class QuestionsTest{
 
     WebDriver webDriver;
     MainPage mainPage;
@@ -31,7 +31,7 @@ public class QuestionsTest {
     }
 
     @Parameterized.Parameters
-    public static Object[] getDescriptionText() {
+    public static Object[] getDescriptionText() {    //массив с ожидаемым текстом ответов на вопросы
         return new Object[][]{
                 {"Сутки — 400 рублей. Оплата курьеру — наличными или картой.", 0},
                 {"Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим.", 1},
@@ -54,12 +54,12 @@ public class QuestionsTest {
 
     @Test
     public void questionTest() {
-        mainPage.clickCookie()
-                .scrollToQuestionMenu()
-                .clickQuestion(index);
+        mainPage.clickCookie()              //закрытие окошка куки
+                .scrollToQuestionMenu()     //скролл до меню с выпадающими вопросами
+                .clickQuestion(index);      //поочередный клик на вопросы
 
         String actualText = mainPage.getDescription(index);
-        assertEquals("Текст отличается от ожидаемого", text, actualText);
+        assertEquals("Текст отличается от ожидаемого", text, actualText); //проверка выпадающих ответов на соответствие
     }
 
     @After

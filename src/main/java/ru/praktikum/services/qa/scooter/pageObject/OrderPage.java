@@ -1,15 +1,11 @@
 package ru.praktikum.services.qa.scooter.pageObject;
 
-//import org.openqa.selenium.*;
 import org.openqa.selenium.*;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.Date;
-
-import static ru.praktikum.services.qa.scooter.config.AppConfig.APP_URL;
 
 public class OrderPage {
 
@@ -17,39 +13,7 @@ public class OrderPage {
 
     public OrderPage(WebDriver webDriver) {
         this.webDriver = webDriver;
-        webDriver.get(APP_URL);
     }
-
-    private final By cookieBtn = By.id("rcc-confirm-button");
-    //кнопка "Заказать" вверху страницы
-    public By orderBtnTop = By.className("Button_Button__ra12g");
-    //кнопка "Заказать" в середине страницы
-    private By orderBtnDown = By.className("Button_Button__ra12g Button_Middle__1CSJM");
-    //блок выпадающего списка вопросов
-
-
-    //клик на кнопку принятие куки
-    public OrderPage clickCookie() {
-        webDriver.findElement(cookieBtn).click();
-        return this;
-    }
-
-    //клик на кнопку "Заказать" (верхняя кнопка)
-    public OrderPage clickOrderBtnTop () {
-        webDriver.findElement(orderBtnTop).click();
-        return this;
-    }
-
-    //скролл и клик на кнопку "Заказать" (нижняя кнопка)
-    public OrderPage clickOrderBtnDown () {
-        WebElement button = webDriver.findElement(orderBtnDown);
-        ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView();", button);
-        webDriver.findElement(orderBtnDown).click();
-        return this;
-    }
-
-
-
 
     //Локаторы элементов в блоке заказа страницы "Для кого самокат":
     //поле "Имя"
@@ -69,9 +33,9 @@ public class OrderPage {
     //поле "Когда привезти самокат"
     private By inputDateField = By.xpath(".//input[@placeholder='* Когда привезти самокат']");
     //поле "Срока аренды"
-    private By inputPeriodField = By.className("Dropdown-placeholder is-selected");
+    private By inputPeriodField = By.xpath("//*[@class='Dropdown-placeholder']");
     //поле "Цвет самоката"
-    private By inputColourField = By.className("Order_Checkboxes__3lWSI Order_FilledContainer__2MKAk");
+    private By inputColourField = By.className("Order_Checkboxes__3lWSI");
     //поле "Комментарии"
     private By inputCommentField = By.xpath(".//input[@placeholder='Комментарий для курьера']");
     //кнопка "Заказ"
@@ -87,7 +51,6 @@ public class OrderPage {
 
 
     //Методы для заполнения заказа:
-
     //заполнение элементов в блоке заказа страницы "Для кого самокат":
     public OrderPage setLoginInfo (String name, String surname, String adress, String metroStaion, String number) {
         inputName(name);
@@ -133,7 +96,7 @@ public class OrderPage {
     }
 
     //заполнение элементов в блоке заказа страницы "Про аренду":
-    public OrderPage setRentInfo (String date, int rentTime, String colour, String comment) {
+    public OrderPage setRentInfo (String date, String rentTime, String colour, String comment) {
         inputOrderDate(date);
         inputOrderPeriod(rentTime);
         inputColour (colour);
@@ -144,8 +107,6 @@ public class OrderPage {
 
     //заполнение даты доставки
     public OrderPage inputOrderDate(String date) {
-//        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yy");
-//        Date date = new Date();
         webDriver.findElement(inputDateField).click();
         webDriver.findElement(inputDateField).sendKeys(date);
         webDriver.findElement(inputDateField).sendKeys(Keys.ENTER);
@@ -154,10 +115,10 @@ public class OrderPage {
     }
 
     //заполнение срока аренды
-    public OrderPage inputOrderPeriod(int rentTime) {
+    public OrderPage inputOrderPeriod(String rentTime) {
         webDriver.findElement(inputPeriodField).click();
         webDriver.findElement(inputPeriodField).
-                findElement(By.xpath(".//div[@class='Dropdown-menu']/div["+rentTime+"]")).click();
+                findElement(By.xpath("//*[text()='"+rentTime+"']")).click();
         webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         return this;
     }
@@ -187,28 +148,11 @@ public class OrderPage {
         return this;
     }
 
-//    //проверка успешного оформления заказа
-//    public void checkConfirmationButton() {
-//        webDriver.findElement(conButton).getText();
-//    }
-
-//    //вывод текста сообщения
-//    public String getConButton() {
-//        return webDriver.findElement(By.className("Order_Text__2broi")).getText();
-//    }
-
     // получение текста об успешном заказе + ожидание
     public String getStatusOrder() {
-        WebElement orderElement = new WebDriverWait(webDriver, Duration.ofSeconds(2)).
+        WebElement orderStatusElement = new WebDriverWait(webDriver, Duration.ofSeconds(2)).
                 until(ExpectedConditions.visibilityOfElementLocated(By.className("Order_ModalHeader__3FDaJ")));
-        return orderElement.getText();
+        return orderStatusElement.getText();
     }
-
-//    //проверка текста сообщения
-//    public void getConfirmationInfo() {
-//        String text = webDriver.findElement(info).getText();
-//        String textPart = "Заказ оформлен";
-//        Assert.assertTrue(text.contains(textPart));
-//    }
 
 }

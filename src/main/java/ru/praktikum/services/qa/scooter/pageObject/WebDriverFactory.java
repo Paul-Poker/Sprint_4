@@ -7,22 +7,21 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class WebDriverFactory {
     public static WebDriver get(){
-        WebDriver driver;
+        WebDriver webDriver;
         String browserName = System.getProperty("browserName");
-//        String browserName = "chrome";
 
         switch (browserName) {
             case "chrome":
                 WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver();
+                webDriver = new ChromeDriver();
                 break;
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
-                driver = new FirefoxDriver();
+                webDriver = new FirefoxDriver();
                 break;
             default:
                 throw new RuntimeException("Browser is not detected");
         }
-        return driver;
+        return webDriver;
     }
 }

@@ -23,33 +23,37 @@ public class MainPage {
     //Локаторы элементов на главной странице:
     //кнопка сохранения кук
     private final By cookieBtn = By.id("rcc-confirm-button");
-//    //кнопка "Заказать" вверху страницы
-//    public By orderBtnTop = By.className("Button_Button__ra12g");
-//    //кнопка "Заказать" в середине страницы
-//    private By orderBtnDown = By.className("Button_Button__ra12g Button_Middle__1CSJM");
-//    //блок выпадающего списка вопросов
+    //кнопка "Заказать" вверху страницы
+    public By orderBtnTop = By.xpath(".//button[@class='Button_Button__ra12g']");
+    //кнопка "Заказать" в середине страницы
+    private By orderBtnDown = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
+    //блок выпадающего списка вопросов
     private By questionMenu = By.className("accordion");
-
 
     //клик на кнопку принятие куки
     public MainPage clickCookie() {
         webDriver.findElement(cookieBtn).click();
         return this;
     }
-//
-//    //клик на кнопку "Заказать" (верхняя кнопка)
-//    public MainPage clickOrderBtnTop () {
-//        webDriver.findElement(orderBtnTop).click();
-//        return this;
-//    }
-//
-//    //скролл и клик на кнопку "Заказать" (нижняя кнопка)
-//    public MainPage clickOrderBtnDown () {
-//        WebElement button = webDriver.findElement(orderBtnDown);
-//        ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView();", button);
-//        webDriver.findElement(orderBtnDown).click();
-//        return this;
-//    }
+
+    //клик на кнопку "Заказать" (верхняя кнопка)
+    public MainPage clickOrderBtnTop () {
+        webDriver.findElement(orderBtnTop).click();
+        return this;
+    }
+
+    //клик на кнопку "Заказать" (нижняя кнопка)
+    public MainPage clickOrderBtnDown () {
+        webDriver.findElement(orderBtnDown).click();
+        return this;
+    }
+
+    //выбор кнопки "Заказать"
+    public void chooseOrderBtn(boolean buttonTop) {
+        if (buttonTop)
+            clickOrderBtnTop();
+        else clickOrderBtnDown();
+    }
 
     //cкролл до списка вопросов
     public MainPage scrollToQuestionMenu() {
