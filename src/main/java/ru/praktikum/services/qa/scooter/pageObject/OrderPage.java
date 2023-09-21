@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
 
 public class OrderPage {
@@ -47,12 +48,12 @@ public class OrderPage {
     //блок успешного создания заказа
     private By statusOrder = By.className("Order_ModalHeader__3FDaJ");
     //кнопка "Посмотреть статус"
-    private By showStatusBtn= By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text() = 'Посмотреть статус']");
+    private By showStatusBtn = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text() = 'Посмотреть статус']");
 
 
     //Методы для заполнения заказа:
     //заполнение элементов в блоке заказа страницы "Для кого самокат":
-    public OrderPage setLoginInfo (String name, String surname, String adress, String metroStaion, String number) {
+    public OrderPage setLoginInfo(String name, String surname, String adress, String metroStaion, String number) {
         inputName(name);
         inputSurname(surname);
         inputAdress(adress);
@@ -63,26 +64,30 @@ public class OrderPage {
     }
 
     //ввод имени
-    public OrderPage inputName (String name) {
+    public OrderPage inputName(String name) {
         webDriver.findElement(inputNameField).sendKeys(name);
         return this;
     }
+
     //ввод фамилии
-    public OrderPage inputSurname (String surname) {
+    public OrderPage inputSurname(String surname) {
         webDriver.findElement(inputSurnameField).sendKeys(surname);
         return this;
     }
+
     //ввод адреса
-    public OrderPage inputAdress (String adress) {
+    public OrderPage inputAdress(String adress) {
         webDriver.findElement(this.inputAdressField).sendKeys(adress);
         return this;
     }
+
     //выбор стации метро
-    public OrderPage inputMetro (String metroStaion) {
+    public OrderPage inputMetro(String metroStaion) {
         webDriver.findElement(inputMetroField).click();
         webDriver.findElement(By.xpath(".//button[@value='" + metroStaion + "']")).click();
         return this;
     }
+
     //ввод номера телефона
     public OrderPage inputPhoneNumber(String number) {
         webDriver.findElement(inputPhoneNumberField).sendKeys(number);
@@ -96,10 +101,10 @@ public class OrderPage {
     }
 
     //заполнение элементов в блоке заказа страницы "Про аренду":
-    public OrderPage setRentInfo (String date, String rentTime, String colour, String comment) {
+    public OrderPage setRentInfo(String date, String rentTime, String colour, String comment) {
         inputOrderDate(date);
         inputOrderPeriod(rentTime);
-        inputColour (colour);
+        inputColour(colour);
         inputComment(comment);
         clickOrderBtn();
         return this;
@@ -118,7 +123,7 @@ public class OrderPage {
     public OrderPage inputOrderPeriod(String rentTime) {
         webDriver.findElement(inputPeriodField).click();
         webDriver.findElement(inputPeriodField).
-                findElement(By.xpath("//*[text()='"+rentTime+"']")).click();
+                findElement(By.xpath("//*[text()='" + rentTime + "']")).click();
         webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         return this;
     }
@@ -154,5 +159,4 @@ public class OrderPage {
                 until(ExpectedConditions.visibilityOfElementLocated(By.className("Order_ModalHeader__3FDaJ")));
         return orderStatusElement.getText();
     }
-
 }

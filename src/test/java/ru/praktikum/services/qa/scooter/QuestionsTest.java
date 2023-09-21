@@ -1,25 +1,18 @@
 package ru.praktikum.services.qa.scooter;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import ru.praktikum.services.qa.scooter.pageObject.MainPage;
-
-import java.time.Duration;
 
 import static org.junit.Assert.assertEquals;
 
 
 @RunWith(Parameterized.class)
 
-public class QuestionsTest{
+public class QuestionsTest extends BaseTest{
 
-    WebDriver webDriver;
     MainPage mainPage;
 
     private String text;
@@ -45,10 +38,7 @@ public class QuestionsTest{
     }
 
     @Before
-    public void set() {
-        WebDriverManager.chromedriver().setup();
-        webDriver = new ChromeDriver();
-        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+    public void init(){
         mainPage = new MainPage(webDriver);
     }
 
@@ -61,10 +51,4 @@ public class QuestionsTest{
         String actualText = mainPage.getDescription(index);
         assertEquals("Текст отличается от ожидаемого", text, actualText); //проверка выпадающих ответов на соответствие
     }
-
-    @After
-    public void tearDown() {
-        webDriver.quit();
-    }
-
 }

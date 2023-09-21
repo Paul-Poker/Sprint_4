@@ -1,28 +1,17 @@
 package ru.praktikum.services.qa.scooter;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.bouncycastle.oer.its.ieee1609dot2.SymmRecipientInfo;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.praktikum.services.qa.scooter.pageObject.MainPage;
 import ru.praktikum.services.qa.scooter.pageObject.OrderPage;
 
-import java.time.Duration;
-
-
-
 @RunWith(Parameterized.class)
 
-public class OrderTest {
+public class OrderTest extends BaseTest{
 
-    WebDriver webDriver;
     MainPage mainPage;
     OrderPage orderPage;
 
@@ -62,17 +51,12 @@ public class OrderTest {
     }
 
     @Before
-    public void setup() {
-//        WebDriverManager.chromedriver().setup();
-        WebDriverManager.firefoxdriver().setup();
-        webDriver = new FirefoxDriver();
-//        webDriver = new ChromeDriver();
-        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        mainPage  = new MainPage(webDriver);
+    public void init(){
+        mainPage = new MainPage(webDriver);
         orderPage = new OrderPage(webDriver);
-
     }
-    //тест позитивного сценария с 2 точками входа в сценарий: кнопка «Заказать» вверху страницы и внизу.
+    //тест позитивного сценария с 2 точками входа в сценарий: кнопка «Заказать» вверху страницы и внизу
+    //при запуске через Chrome невозможно оформить заказ - не нажимается кнопка "Да" для подтверждения заказа
     @Test
     public void orderTest() {
         mainPage.clickCookie()                                              //закрытие окошка куки
@@ -83,11 +67,6 @@ public class OrderTest {
 
         String actualText = orderPage.getStatusOrder();
         Assert.assertTrue(actualText.contains("Заказ оформлен"));           //проверка всплывающего окна об успешном заказе
-    }
-
-    @After
-    public void tearDown() {
-        webDriver.quit();
     }
 
 }

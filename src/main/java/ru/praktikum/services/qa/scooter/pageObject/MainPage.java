@@ -65,16 +65,17 @@ public class MainPage {
 
     //клик на вопрос
     public MainPage clickQuestion(int index) {
-        webDriver.findElement(By.xpath((".//div[@id='accordion__heading-"+index)+"']")).click();
-        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        WebElement questionElement = new WebDriverWait(webDriver,Duration.ofSeconds(2)).
+                until(ExpectedConditions.visibilityOfElementLocated(By.xpath((".//div[@id='accordion__heading-"+index)+"']")));
+        questionElement.click();
         return this;
     }
 
     // получение текста вопроса + ожидание
     public String getDescription(int index) {
-        WebElement questionElement = new WebDriverWait(webDriver,Duration.ofSeconds(2)).
+        WebElement descriptionElement = new WebDriverWait(webDriver,Duration.ofSeconds(2)).
                until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//div[@id='accordion__panel-" + index + "']/p")));
-        return questionElement.getText();
+        return descriptionElement.getText();
     }
 
 }
